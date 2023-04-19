@@ -12,7 +12,7 @@
     以mvc-simple-demo模块为例
 ### 创建工程
 #### 下载代码
-    git clone https://github.com/easy-spring-staging/easy-spring-staging.git
+    git clone https://github.com/open-ess/easy-spring-staging.git
 
 目录结构  
 
@@ -30,11 +30,16 @@
 ![avatar](http://m.qpic.cn/psc?/V51ZBlr00lMhVT1pEITA4aBZaC1BLPNL/6tCTPh7N*X6CBkvkDvKlZTx*YdXVhm3CT98lsmgx8vMzCG7NvTCu0O2GZl3NS380zh953tVRTOPJtfSb7Ze4fXoZlsSNQ8LRZUIQJUQyn3s!/b&bo=gAcaBIAHGgQDFzI!&rf=viewer_4)
 
 导入easy-spring-staging\easy-spring-staging-resource\EasyCodeConfig.json:
-导入成功后会新增三个个模板：  
+导入成功
+    三个个模板：
+        ESS-MVC-PRO(生成工程代码模板)
+        ESS-MVC-SI-API(生成简化REST接口的代码模板)
+        ESS-MVC-ST-API(生成标准REST接口的代码模板)
+    一个类型映射
+        ESS
+    一个配置组
+        ESS: 包括三个配置文件proSetting.vm(生成工程的配置)、siApiSetting.vm(生成简化REST接口的配置)、stApiSetting.vm(生成标准REST接口的配置)
 
-    ESS-MVC-PRO(生成工程代码模板)
-    ESS-MVC-SI-API(生成简化REST接口的代码模板)
-    ESS-MVC-ST-API(生成标准REST接口的代码模板)
 
 ### 创建数据库表
 使用easy-spring-staging\easy-spring-staging-resource\easy-spring-staging-demo-db.sql  
@@ -75,7 +80,7 @@
 ![avatar](http://m.qpic.cn/psc?/V51ZBlr00lMhVT1pEITA4aBZaC1BLPNL/6tCTPh7N*X6CBkvkDvKlZRxafLlghpN0NEOb3OCJjz.nSceheUn8FYylSntIHDlRrA5zGO5onRgX7fjsNV*xDPce*o9w*3BmvafwiANJT04!/b&bo=gAciBIAHIgQDFzI!&rf=viewer_4)
 
 4、运行工程
-运行com.easyspring.demo.mvc.simple.AppLaunch
+运行com.ess.demo.mvc.simple.AppLaunch
 ![avatar](http://m.qpic.cn/psc?/V51ZBlr00lMhVT1pEITA4aBZaC1BLPNL/6tCTPh7N*X6CBkvkDvKlZaO7ezxGUpHo42HtirMY5Uh.L3m05TZ3FjaAYNoSqPhzxlyBd6pPr3Xj4DCfimBxsg44vEcp4n0f.ox3zoubis4!/b&bo=gAciBIAHIgQDByI!&rf=viewer_4)
 swagger文档效果
 ![avatar](http://m.qpic.cn/psc?/V51ZBlr00lMhVT1pEITA4aBZaC1BLPNL/6tCTPh7N*X6CBkvkDvKlZcoxHpS4OQhdJaB*b9xRhqXOFaKJElc0Oiq0lSbzAAQnKtLsGVrqi*7u9wM5OnYk5CtfbTEZUrW7zrF4sZ7LpKI!/b&bo=cAcQBHAHEAQDFzI!&rf=viewer_4)
