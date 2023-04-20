@@ -34,7 +34,7 @@ public interface BaseDao<K, M extends AbstractPO<K>> {
    * @author caobaoyu
    * @date 2020/5/15 14:59
    */
-  M load(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "k") K k);
+  M load(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "k") K k) throws Exception;
 
   /**
    * 通过多个条件查询列表
@@ -45,7 +45,7 @@ public interface BaseDao<K, M extends AbstractPO<K>> {
    * @param u 鉴权用户模型
    * @param q 请求参数模型
    * @return java.util.List<M> 数据List
-   * @throws Exception 数据库异常
+//   * @throws Exception 数据库异常
    * @author caobaoyu
    * @date 2020/5/15 15:04
    */
@@ -91,7 +91,7 @@ public interface BaseDao<K, M extends AbstractPO<K>> {
    * @author caobaoyu
    * @date 2020/5/15 15:13
    */
-  Integer insert(M m);
+  Integer insert(M m) throws Exception;
 
   /**
    * 通过主键删除数据 .
@@ -106,7 +106,7 @@ public interface BaseDao<K, M extends AbstractPO<K>> {
    * @author caobaoyu
    * @date 2020/5/15 15:17
    */
-  Integer delete(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "k") K k);
+  Integer delete(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "k") K k) throws Exception;
 
   /**
    * 通过主键List删除数据 .
@@ -121,7 +121,7 @@ public interface BaseDao<K, M extends AbstractPO<K>> {
    * @author caobaoyu
    * @date 2020/5/15 15:24
    */
-  Integer deleteMulti(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "ks") List<K> ks);
+  Integer deleteMulti(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "ks") List<K> ks) throws Exception;
 
   /**
    * 修改数据 .
@@ -137,7 +137,7 @@ public interface BaseDao<K, M extends AbstractPO<K>> {
    * @author caobaoyu
    * @date 2020/5/15 15:28
    */
-  Integer update(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "k") K k, @Param(value = "m") M m);
+  Integer update(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "k") K k, @Param(value = "m") M m) throws Exception;
 
   /**
    * 修改数据 .
@@ -153,5 +153,5 @@ public interface BaseDao<K, M extends AbstractPO<K>> {
    * @author caobaoyu
    * @date 2020/5/15 15:28
    */
-  Boolean updateAll(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "k") K k, @Param(value = "m") M m);
+  Boolean updateAll(@Param(value = "u") AuthorizationUser<?, ?, ?, ?> u, @Param(value = "k") K k, @Param(value = "m") M m) throws Exception;
 }

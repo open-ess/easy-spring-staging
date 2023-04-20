@@ -34,8 +34,6 @@ public abstract class AbstractService<K, M extends Model<K>> extends SuperAbstra
 
   public abstract BaseDao<K, M> getDao();
 
-
-  @SuppressWarnings("unchecked")
   @Transactional(readOnly = true)
   public M queryDetails(AuthorizationUser<?, ?, ?, ?> u, K k, QueryDetailsExecutor<K, M>... executors) throws Exception {
     M m;
@@ -45,7 +43,6 @@ public abstract class AbstractService<K, M extends Model<K>> extends SuperAbstra
     return m;
   }
 
-  @SuppressWarnings("unchecked")
   @Transactional(readOnly = true)
   public Page<M> queryPage(AuthorizationUser<?, ?, ?, ?> u, QueryParameter q, QueryPageExecutor<K, M>... executors) throws Exception {
     Page<M> page;
@@ -74,7 +71,7 @@ public abstract class AbstractService<K, M extends Model<K>> extends SuperAbstra
     return getDao().count(u,q);
   }
 
-  @SuppressWarnings("unchecked")
+
   @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public K add(AuthorizationUser<?, ?, ?, ?> u, M m, AddExecutor<K, M>... executors) throws Exception {
     K k = null;
@@ -86,7 +83,6 @@ public abstract class AbstractService<K, M extends Model<K>> extends SuperAbstra
     return k;
   }
 
-  @SuppressWarnings("unchecked")
   @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public Boolean remove(AuthorizationUser<?, ?, ?, ?> u, K k, RemoveExecutor<K>... executors) throws Exception {
     boolean result = false;
@@ -99,7 +95,6 @@ public abstract class AbstractService<K, M extends Model<K>> extends SuperAbstra
     return result;
   }
 
-  @SuppressWarnings("unchecked")
   @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public Integer removeMulti(AuthorizationUser<?, ?, ?, ?> u, List<K> ks, RemoveMultiExecutor<K>... executors) throws Exception {
     Integer count;
@@ -110,7 +105,6 @@ public abstract class AbstractService<K, M extends Model<K>> extends SuperAbstra
   }
 
 
-  @SuppressWarnings("unchecked")
   @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public Boolean edit(AuthorizationUser<?, ?, ?, ?> u, K k, M m, EditExecutor<K, M>... executors) throws Exception {
     boolean result = false;
@@ -123,7 +117,6 @@ public abstract class AbstractService<K, M extends Model<K>> extends SuperAbstra
     return result;
   }
 
-  @SuppressWarnings("unchecked")
   @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public Boolean editAll(AuthorizationUser<?, ?, ?, ?> u, K k, M m, EditAllExecutor<K, M>... executors) throws Exception {
     boolean result = false;
