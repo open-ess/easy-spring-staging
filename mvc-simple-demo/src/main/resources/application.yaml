@@ -15,7 +15,6 @@ spring:
     resources:
       add-mappings: false
 
-
 mybatis:
   config-location: classpath:mybatis-config.xml
   type-aliases-package: com.ess.demo.mvc.simple.modules.*.model.*;

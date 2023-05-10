@@ -1,7 +1,7 @@
 package com.ess.core.executor.query;
 
 import com.ess.core.model.Page;
-import com.ess.core.model.QueryParameter;
+import com.ess.core.model.Query;
 import com.ess.core.model.Model;
 import com.ess.core.sercurity.AuthorizationUser;
 
@@ -25,5 +25,5 @@ public interface QueryPageExecutor<K, M extends Model<K>> {
      * @author caobaoyu
      * @date 2023/4/17 10:00
      */
-    void execute(AuthorizationUser<?, ?, ?, ?> u, QueryParameter q, Page<M> p) throws Exception;
+    void execute(AuthorizationUser<?, ?, ?, ?> u, Query q, Page<M> p) throws Exception;
 }

@@ -11,6 +11,7 @@
     <modules>
         <module>./easy-spring-staging-core</module>
         <module>./mvc-simple-demo</module>
+        <module>./easy-spring-staging-extension</module>
     </modules>
 
     <properties>
@@ -25,9 +26,10 @@
         <spring-cloud-dependencies-version>2021.0.4</spring-cloud-dependencies-version>
         <spring-cloud-alibaba-version>2021.0.4.0</spring-cloud-alibaba-version>
 
-        <springfox-swagger-ui-version>2.9.2</springfox-swagger-ui-version>
-        <springfox-swagger2-version>2.9.2</springfox-swagger2-version>
+        <springfox-swagger-ui-version>2.10.5</springfox-swagger-ui-version>
+        <springfox-swagger2-version>2.10.5</springfox-swagger2-version>
         <springfox-swagger-models-version>1.6.6</springfox-swagger-models-version>
+<!--        <springfox-boot-starte&#45;&#45;version>3.0.0</springfox-boot-starte&#45;&#45;version>-->
 
         <mysql-version>8.0.30</mysql-version>
         <druid-spring-boot-starter-version>1.2.12</druid-spring-boot-starter-version>
@@ -43,6 +45,12 @@
         <spring-boot-starter-jetty-version>2.7.3</spring-boot-starter-jetty-version>
         <xnio-nio-version>3.8.1.Final</xnio-nio-version>
         <spring-boot-starter-undertow-version>2.7.3</spring-boot-starter-undertow-version>
+
+
+
+        <spring-data-elasticsearch-version>4.1.3</spring-data-elasticsearch-version>
+        <elasticsearch-clien-version>7.16.2</elasticsearch-clien-version>
+
         <!--依赖库版本声明结束-->
     </properties>
 
@@ -107,7 +115,16 @@
                 <version>${springfox-swagger-models-version}</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox-boot-starte--version}</version>
+            </dependency>
+<!--                <dependency>-->
+<!--                    <groupId>io.springfox</groupId>-->
+<!--                    <artifactId>springfox-boot-starter</artifactId>-->
+<!--                    <version>3.0.0</version>-->
+<!--                </dependency>-->
             <!--swagger依赖定义结束-->
             <!--
                         <dependency>
@@ -172,17 +189,55 @@
                 <scope>provided</scope>
             </dependency>
 
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson-version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba</groupId>-->
+<!--                <artifactId>fastjson</artifactId>-->
+<!--                <version>${fastjson-version}</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.jboss.xnio</groupId>
                 <artifactId>xnio-nio</artifactId>
                 <version>${xnio-nio-version}</version>
             </dependency>
             <!-- 工具包 依赖定义结束-->
+
+            <!-- ES 依赖定义开始-->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>${spring-data-elasticsearch-version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.elasticsearch.client</groupId>
+                        <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.elasticsearch.client</groupId>
+                        <artifactId>transport</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.elasticsearch.plugin</groupId>
+                        <artifactId>transport-netty4-client</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch-clien-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>transport</artifactId>
+                <version>${elasticsearch-clien-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.plugin</groupId>
+                <artifactId>transport-netty4-client</artifactId>
+                <version>${elasticsearch-clien-version}</version>
+            </dependency>
+            <!-- ES 依赖定义结束-->
         </dependencies>
     </dependencyManagement>
     <!--所有子工程公用的第三方依赖进行约束声明结束-->

@@ -19,7 +19,7 @@ public class ArgumentResolverConfiguration extends AbstractArgumentResolverConfi
     /**
      * 构建出来swagger参数外的其他参数解析器
      * 
-     * @return
+     * @return HandlerMethodArgumentResolver List
      */
     @Override
     public List<HandlerMethodArgumentResolver> builderArgumentResolver() {

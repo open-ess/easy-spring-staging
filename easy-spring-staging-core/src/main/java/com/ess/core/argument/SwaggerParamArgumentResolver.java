@@ -1,6 +1,6 @@
 package com.ess.core.argument;
 
-import com.ess.core.model.QueryParameter;
+import com.ess.core.model.Query;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.core.MethodParameter;
@@ -24,8 +24,8 @@ public class SwaggerParamArgumentResolver implements HandlerMethodArgumentResolv
   }
 
   @Override
-  public QueryParameter resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-    QueryParameter queryParameter = new QueryParameter();
+  public Query resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    Query query = new Query();
     ApiImplicitParams apiImplicitParams = parameter.getMethodAnnotation(ApiImplicitParams.class);
     if (apiImplicitParams != null) {
       ApiImplicitParam[] apiImplicitParamArray = apiImplicitParams.value();
@@ -42,18 +42,18 @@ public class SwaggerParamArgumentResolver implements HandlerMethodArgumentResolv
             String[] parameterValues = ParameterUtil.getParamValues(name, paramType, webRequest);
             List<Object> parameterObjectList = ParameterUtil.convertList(parameterValues, dataType, format);
             if (parameterObjectList != null) {
-              queryParameter.put(name, parameterObjectList);
+              query.put(name, parameterObjectList);
             }
           } else {
             String parameterValue = ParameterUtil.getParamValue(name, paramType, webRequest);
             Object parameterObject = ParameterUtil.convert(parameterValue, dataType, format);
             if (parameterObject != null) {
-              queryParameter.put(name, parameterObject);
+              query.put(name, parameterObject);
             }
           }
         }
       }
     }
-    return queryParameter;
+    return query;
   }
 }

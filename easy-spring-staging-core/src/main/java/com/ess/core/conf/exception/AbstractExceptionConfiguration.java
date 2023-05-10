@@ -6,8 +6,8 @@ package com.ess.core.conf.exception;
 
 
 import com.ess.core.exception.BusinessException;
-import com.ess.core.model.ResponseCode;
-import com.ess.core.model.ResponseModel;
+import com.ess.core.model.RestStatus;
+import com.ess.core.model.RestResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -34,46 +34,37 @@ import java.net.BindException;
  */
 @Slf4j
 public abstract class AbstractExceptionConfiguration {
-
-    @ResponseBody
-    @ExceptionHandler(value = {
-            BindException.class,
-            HttpMessageNotReadableException.class,
-            MethodArgumentNotValidException.class,
-            TypeMismatchException.class,
-            ServletRequestBindingException.class,
-            MissingRequestValueException.class,
-            HttpMessageConversionException.class
-    })
-    public ResponseModel<Void> handler400(Exception e) {
-        log.error(e.getMessage(), e);
-        return ResponseModel.fail(ResponseCode.BAD_REQUEST, null);
-    }
-
-    @ResponseBody
-    @ExceptionHandler(value = {NoHandlerFoundException.class})
-    public ResponseModel<Void> handler404(Exception e) {
-        log.error(e.getMessage(), e);
-        return ResponseModel.fail(ResponseCode.NOT_FOUND, null);
-    }
-
-    @ResponseBody
-    @ExceptionHandler(value = BusinessException.class)
-    public ResponseModel<Void> handlerBusiness(Exception e) {
-        log.error(e.getMessage(), e);
-        if (e instanceof BusinessException) {
-            BusinessException be = (BusinessException) e;
-            return ResponseModel.create(be.getCode(), be.getMessage(), null);
-        } else {
-            return ResponseModel.fail(ResponseCode.INTERNAL_SERVER_ERROR, null);
-        }
-    }
-
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
-    public ResponseModel<Void> handler500(Exception e) {
+    public RestResult<Void> handler(Exception e) {
         log.error(e.getMessage(), e);
-        return ResponseModel.fail(ResponseCode.INTERNAL_SERVER_ERROR, null);
+        try {
+            if (e instanceof BindException) {
+                return RestResult.fail(RestStatus.BAD_REQUEST, null);
+            } else if (e instanceof HttpMessageNotReadableException) {
+                return RestResult.fail(RestStatus.BAD_REQUEST, null);
+            } else if (e instanceof MethodArgumentNotValidException) {
+                return RestResult.fail(RestStatus.BAD_REQUEST, null);
+            } else if (e instanceof TypeMismatchException) {
+                return RestResult.fail(RestStatus.BAD_REQUEST, null);
+            } else if (e instanceof ServletRequestBindingException) {
+                return RestResult.fail(RestStatus.BAD_REQUEST, null);
+            } else if (e instanceof MissingRequestValueException) {
+                return RestResult.fail(RestStatus.BAD_REQUEST, null);
+            } else if (e instanceof HttpMessageConversionException) {
+                return RestResult.fail(RestStatus.BAD_REQUEST, null);
+            } else if (e instanceof NoHandlerFoundException) {
+                return RestResult.fail(RestStatus.NOT_FOUND, null);
+            } else if (e instanceof BusinessException) {
+                BusinessException be = (BusinessException) e;
+                return RestResult.create(be.getCode(), be.getMessage(), null);
+            } else {
+                return RestResult.fail(RestStatus.INTERNAL_SERVER_ERROR, null);
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            return RestResult.fail(RestStatus.INTERNAL_SERVER_ERROR, null);
+        }
     }
 
 }

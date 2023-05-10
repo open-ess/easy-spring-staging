@@ -18,4 +18,7 @@ public interface Model<K> extends Serializable {
 
     @JsonIgnore
     K getKey();
+
+    @JsonIgnore
+    void setKey(K k);
 }

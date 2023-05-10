@@ -42,12 +42,8 @@ public abstract class AbstractPO<K> implements Model<K> {
      * @author caobaoyu
      * @date 2022/10/1 23:17
      */
-    public void setDefaultCreateTime() {
-        try {
-            assignment(CREATE_TIME_FIELD_NAME, new Date());
-        } catch (Exception e) {
-
-        }
+    public void setDefaultCreateTime() throws Exception {
+        assignment(CREATE_TIME_FIELD_NAME, new Date());
     }
 
     /**
@@ -56,12 +52,9 @@ public abstract class AbstractPO<K> implements Model<K> {
      * @author caobaoyu
      * @date 2022/10/1 23:17
      */
-    public void setDefaultModifyTime() {
-        try {
-            assignment(MODIFY_TIME_FIELD_NAME, new Date());
-        } catch (Exception e) {
+    public void setDefaultModifyTime() throws Exception {
+        assignment(MODIFY_TIME_FIELD_NAME, new Date());
 
-        }
     }
 
     /**
@@ -70,12 +63,8 @@ public abstract class AbstractPO<K> implements Model<K> {
      * @author caobaoyu
      * @date 2022/10/1 23:17
      */
-    public void clearCreateTime() {
-        try {
-            assignment(CREATE_TIME_FIELD_NAME, null);
-        } catch (Exception e) {
-
-        }
+    public void clearCreateTime() throws Exception {
+        assignment(CREATE_TIME_FIELD_NAME, null);
     }
 
     /**
@@ -84,11 +73,7 @@ public abstract class AbstractPO<K> implements Model<K> {
      * @author caobaoyu
      * @date 2022/10/1 23:17
      */
-    public void clearModifyTime() {
-        try {
-            assignment(MODIFY_TIME_FIELD_NAME, null);
-        } catch (Exception e) {
-
-        }
+    public void clearModifyTime() throws Exception {
+       assignment(MODIFY_TIME_FIELD_NAME, null);
     }
 }

@@ -4,6 +4,7 @@
 package com.ess.core.model.convert;
 
 
+import com.ess.core.model.Page;
 import com.ess.core.model.dto.AbstractDTO;
 import com.ess.core.model.po.AbstractPO;
 
@@ -18,6 +19,8 @@ import java.util.List;
 public interface ServiceConverter<K, M extends AbstractDTO<K>, P extends AbstractPO<K>>{
     M poToDto(P p);
     List<M> poToDto(List<P> ps);
+    Page<M> poToDto(Page<P> ps);
     P dtoToPo(M m);
     List<P> dtoToPo(List<M> ma);
+
 }

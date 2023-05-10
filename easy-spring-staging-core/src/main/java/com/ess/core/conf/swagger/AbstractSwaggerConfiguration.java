@@ -7,7 +7,10 @@ import com.ess.core.argument.SwaggerParam;
 import com.ess.core.argument.UserParam;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import springfox.documentation.builders.*;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Parameter;
@@ -183,7 +186,12 @@ public abstract class AbstractSwaggerConfiguration implements WebMvcConfigurer {
 
         registry.addResourceHandler("/v2/api-docs/**")
                 .addResourceLocations("classpath:/META-INF/resources/v2/api-docs/");
-    }
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
 
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+    }
 
 }

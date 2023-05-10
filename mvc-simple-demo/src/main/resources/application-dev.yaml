@@ -3,7 +3,7 @@ logging:
   file:
     path: ../logs
   level:
-    root: info
+    root: trace
   logback:
     rolling-policy:
       max-file-size: 100MB
@@ -19,4 +19,15 @@ spring:
     initialSize: 5
     minIdle: 5
     maxActive: 20
+
+  elasticsearch:
+    uris: http://192.168.126.10:9200
+    connectionTimeout: 1000
+    socketTimeout: 30000
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+
+
 

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.Map;
  */
 @ApiModel(value = "Page", description = "分页")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
 @Data
 public class Page<M extends Model<?>> {
     // 每页大小参数名称
@@ -114,6 +116,15 @@ public class Page<M extends Model<?>> {
         this.pageSize = p.getPageSize();
         this.total = p.getTotal();
         this.pageCount = p.getPageCount();
+        this.items = items;
+        this.hasNext = this.pageNo < this.pageCount;
+        this.hasPrev = this.pageNo > 1;
+    }
+    public Page(Integer pageNo, Integer pageSize, Long total, List<M> items) {
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+        this.total = total;
+        this.pageCount = Long.valueOf(total%pageSize==0?total/pageSize:total/pageSize+1).intValue();
         this.items = items;
         this.hasNext = this.pageNo < this.pageCount;
         this.hasPrev = this.pageNo > 1;
