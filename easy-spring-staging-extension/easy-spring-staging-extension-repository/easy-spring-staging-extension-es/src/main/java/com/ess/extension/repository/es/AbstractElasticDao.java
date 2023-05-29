@@ -7,6 +7,7 @@ package com.ess.extension.repository.es;
 import com.ess.core.model.Model;
 import com.ess.core.model.Page;
 import com.ess.core.model.Query;
+import com.ess.core.model.Sort;
 import com.ess.core.repository.BaseDao;
 import com.ess.core.sercurity.AuthorizationUser;
 import com.ess.core.utils.JsonUtil;
@@ -31,8 +32,13 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.xcontent.XContentType;
 
+import javax.naming.directory.SearchResult;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +68,15 @@ public abstract class AbstractElasticDao<K, M extends Model<K>> implements BaseD
   }
 
 
+  /**
+   * 模型设置主键
+   *
+   * @param m 模型
+   * @param id 主键
+   *
+   * @author caobaoyu
+   * @date 2023/5/17 10:44
+   */
   private void setKey(M m, String id) {
     if (m != null && id != null) {
       Class<?> keyClass = getKeyClass();
@@ -79,20 +94,71 @@ public abstract class AbstractElasticDao<K, M extends Model<K>> implements BaseD
     }
   }
 
+
+  /**
+   * 创建查询条件
+   *
+   * @param q 查询条件
+   * @param elasticCondition
+   * @return 查询条件
+   *
+   * @author caobaoyu
+   * @date 2023/5/17 11:13
+   */
   private SearchRequest createSearchRequest(Query q, ElasticCondition elasticCondition) {
     SearchRequest searchRequest = new SearchRequest(getIndexName());
-    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+    SearchSourceBuilder sourceBuilder = null;
+
+    SearchSourceBuilder querySourceBuilder = new SearchSourceBuilder();
+    // 业务查询条件
+    if (elasticCondition.builder(querySourceBuilder, q)) {
+      sourceBuilder = querySourceBuilder;
+    } else {
+//      查询所有的条件
+      SearchSourceBuilder allSourceBuilder = new SearchSourceBuilder();
+      allSourceBuilder.query(QueryBuilders.matchAllQuery());
+      sourceBuilder = allSourceBuilder;
+    }
+    // 分页
     if (q.isPage()) {
       sourceBuilder.from((q.getPageModel().getPageNo() - 1) * q.getPageModel().getPageSize());
       sourceBuilder.size(q.getPageModel().getPageSize());
     }
-    if (!elasticCondition.builder(sourceBuilder, q)) {
-      sourceBuilder.query(QueryBuilders.matchAllQuery());
+    // 排序
+    if(q.isSort()){
+      Object sortObj = q.get(Query.SORT_PARAM_KEY_NAME);
+      if(sortObj!=null){
+        List<Sort> sorts = (List<Sort>)sortObj;
+        if(sorts!=null && sorts.size()>0){
+          List<SortBuilder<?>> sortBuilders = new ArrayList<>();
+          sorts.forEach( e ->{
+            FieldSortBuilder fsb = new FieldSortBuilder(e.getColumnName());
+            if(e.getSortType() == Sort.SORT_TYPE_ASC){
+              fsb.order(SortOrder.ASC);
+            } else {
+              fsb.order(SortOrder.DESC);
+            }
+            sortBuilders.add(fsb);
+          });
+          sourceBuilder.sort(sortBuilders);
+        }
+      }
     }
     searchRequest.source(sourceBuilder);
     return searchRequest;
   }
 
+  /**
+   * 查询ES数据集
+   *
+   * @param restHighLevelClient restClient
+   * @param searchRequest 请求
+   * @return 请求结果
+   * @throws Exception 异常
+   *
+   * @author caobaoyu
+   * @date 2023/5/17 11:19
+   */
   private SearchResult<M> searchExecute(RestHighLevelClient restHighLevelClient, SearchRequest searchRequest) throws Exception {
     SearchResult<M> searchResult = new SearchResult();
     SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);

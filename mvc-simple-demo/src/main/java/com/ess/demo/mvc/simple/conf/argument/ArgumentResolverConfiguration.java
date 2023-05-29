@@ -16,23 +16,23 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 public class ArgumentResolverConfiguration extends AbstractArgumentResolverConfiguration {
-    /**
-     * 构建出来swagger参数外的其他参数解析器
-     * 
-     * @return HandlerMethodArgumentResolver List
-     */
-    @Override
-    public List<HandlerMethodArgumentResolver> builderArgumentResolver() {
-        List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>();
-        // 解析用户参数,通常通过token进行用户信息的构建1
-        AbstractUserParamArgumentResolver user = new AbstractUserParamArgumentResolver(){
-            @Override
-            public AuthorizationUser<?, ?, ?, ?> parserUser(MethodParameter parameter, NativeWebRequest webRequest) {
-                return new DefaultAuthorizationUser();
-            }
-        };
-        argumentResolvers.add(user);
-        return argumentResolvers;
-    }
+  /**
+   * 构建出来swagger参数外的其他参数解析器
+   *
+   * @return
+   */
+  @Override
+  public List<HandlerMethodArgumentResolver> builderArgumentResolver() {
+    List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>();
+    // 解析用户参数,通常通过token进行用户信息的构建1
+    AbstractUserParamArgumentResolver user = new AbstractUserParamArgumentResolver() {
+      @Override
+      public AuthorizationUser<?, ?, ?, ?> parserUser(MethodParameter parameter, NativeWebRequest webRequest) {
+        return new DefaultAuthorizationUser();
+      }
+    };
+    argumentResolvers.add(user);
+    return argumentResolvers;
+  }
 }
 

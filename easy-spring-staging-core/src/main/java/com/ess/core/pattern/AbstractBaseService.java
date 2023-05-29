@@ -40,7 +40,7 @@ public abstract class AbstractBaseService<K, M extends Model<K>> {
    * @author caobaoyu
    * @date 2023/4/14 16:23
    */
-  protected static <R, M extends Model<?>> List<R> getModelPropertyList(List<M> list, GetCallback<M, R> getCallback) {
+  protected static <R, M extends Model<?>> List<R> getListProperties(List<M> list, GetCallback<M, R> getCallback) {
     List<R> keys = null;
     if (list!= null && list.size() > 0) {
       List<R> keyList = list.stream().map(getCallback::get).filter(Objects::nonNull).collect(Collectors.toList());
@@ -50,8 +50,6 @@ public abstract class AbstractBaseService<K, M extends Model<K>> {
     }
     return keys;
   }
-
-
   /**
    * @param p           分页模型
    * @param getCallback 获取属性回调
@@ -61,13 +59,14 @@ public abstract class AbstractBaseService<K, M extends Model<K>> {
    * @author caobaoyu
    * @date 2023/4/14 16:23
    */
-  protected static <R, M extends Model<?>> List<R> getModelPropertyList(Page<M> p, GetCallback<M, R> getCallback) {
+  protected static <R, M extends Model<?>> List<R> getPageProperties(Page<M> p, GetCallback<M, R> getCallback) {
     List<R> keys = null;
-    if (p != null) {
-      keys = getModelPropertyList(p.getItems(),getCallback);
+    if(p!=null){
+      keys = getListProperties(p.getItems(),getCallback);
     }
     return keys;
   }
+
 
 
   /**

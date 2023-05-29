@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.util.Date;
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,31 +15,25 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(value = "EmployeeInfo", description = "员工-模型类")
-public class EmployeeInfo implements Model<String> {
+@ApiModel(value = "AccountInfo", description = "账号-模型类")
+public class AccountInfo implements Model<String> {
 
-  // 员工ID
-  @ApiModelProperty(value = "员工ID")
+  // 用户ID
+  @ApiModelProperty(value = "用户ID")
   private String id;
 
-  // 账号ID
-  @ApiModelProperty(value = "账号ID")
-  private String accountId;
+  // 账号名称
+  @ApiModelProperty(value = "账号名称")
+  private String accountName;
 
-  // 员工姓名
-  @ApiModelProperty(value = "员工姓名")
-  private String employeeName;
+  // 性别(1:男;0:女)
+  @ApiModelProperty(value = "性别(1:男;0:女)")
+  private String gender;
 
-  // 入职日期
-  @ApiModelProperty(value = "入职日期, 格式:yyyy-MM-dd")
+  // 创建信息
+  @ApiModelProperty(value = "创建信息, 格式:yyyy-MM-dd")
   @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
-  private Date entryTime;
-
-  @ApiModelProperty(value = "账号")
-  private AccountInfo accountInfo;
-
-  @ApiModelProperty(value = "薪水列表")
-  private List<SalaryInfo> salaryInfos;
+  private Date createTime;
 
   @Override
   public String getKey() {

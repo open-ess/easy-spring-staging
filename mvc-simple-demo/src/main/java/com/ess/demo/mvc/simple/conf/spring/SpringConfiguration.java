@@ -6,14 +6,14 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 @Configuration
 public class SpringConfiguration extends AbstractSpringConfiguration {
-    @Override
-    public void addCustomResourceHandlers(ResourceHandlerRegistry registry) {
+  @Override
+  public void addCustomResourceHandlers(ResourceHandlerRegistry registry) {
 
-    }
+  }
 
-    @Override
-    public boolean isCors() {
-        return true;
-    }
+  @Override
+  public boolean isCors() {
+    return true;
+  }
 }
 

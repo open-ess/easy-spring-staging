@@ -33,7 +33,7 @@ public abstract class AbstractSimpleService<DAO extends BaseDao<K,M>,K, M extend
 
   public abstract DAO getDao();
 
-  @Transactional(readOnly = true)
+  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public M queryDetails(AuthorizationUser<?, ?, ?, ?> u, K k, QueryDetailsExecutor<K, M>... executors) throws Exception {
     M m;
     queryDetailsExecute(u, QueryDetailsPerExecutor.class, k, null, executors);
@@ -43,7 +43,8 @@ public abstract class AbstractSimpleService<DAO extends BaseDao<K,M>,K, M extend
   }
 
 
-  @Transactional(readOnly = true)
+
+  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public Page<M> queryPage(AuthorizationUser<?, ?, ?, ?> u, Query q, QueryPageExecutor<K, M>... executors) throws Exception {
     Page<M> page;
     q.initPage();
@@ -58,14 +59,14 @@ public abstract class AbstractSimpleService<DAO extends BaseDao<K,M>,K, M extend
     return page;
   }
 
-  @Transactional(readOnly = true)
+  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public List<M> queryList(AuthorizationUser<?, ?, ?, ?> u,String fn, List<?> ks) throws Exception{
     List<M> dataList;
     dataList = getDao().list(u,fn, ks);
     return dataList;
   }
 
-  @Transactional(readOnly = true)
+  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
   public Long count(AuthorizationUser<?, ?, ?, ?> u, Query q) throws Exception {
     return getDao().count(u,q);
   }

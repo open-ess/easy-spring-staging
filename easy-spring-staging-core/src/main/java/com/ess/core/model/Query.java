@@ -5,7 +5,9 @@ package com.ess.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,10 +54,6 @@ public class Query extends HashMap<String, Object> {
     public static final String SORT_PARAM_KEY_NAME = "sort";
     // 排序参数分割符号
     public static final String SORT_PARAM_VALUE_DELIMITER = ",";
-    // 升序符号
-    public static final String SORT_TYPE_ASC = "ASC";
-    // 将序符号
-    public static final String SORT_TYPE_DESC = "DESC";
     public static QueryParameterBuilder builder() {
         return new QueryParameterBuilder();
     }
@@ -118,39 +116,40 @@ public class Query extends HashMap<String, Object> {
      */
     @JsonIgnore
     public void sort(Map<String, String> columnMap) {
-        final StringBuilder sortBuffer = new StringBuilder();
-        String sortExpression;
-        final Object sortParam = this.get(Query.SORT_PARAM_KEY_NAME);
-        if (sortParam != null && columnMap != null && columnMap.size() > 0) {
-            sortExpression = (String) sortParam;
-            String[] sortArray = sortExpression.split(Query.SORT_PARAM_VALUE_DELIMITER);
-            boolean first = true;
-            for (String s : sortArray) {
-                if (s != null && !"".equals(s) && s.length() > 1) {
-                    String sortTypeStr = s.substring(0, 1);
-                    String sortType = null;
-                    String columnName = columnMap.get(s.substring(1));
-                    if (sortTypeStr.equals("+")) {
-                        sortType = Query.SORT_TYPE_ASC;
-                    } else if (sortTypeStr.equals("-")) {
-                        sortType = Query.SORT_TYPE_DESC;
-                    }
-                    if (sortType != null && columnName != null) {
-                        if (!first) {
-                            sortBuffer.append(",");
+        if(isSort()){
+            List<Sort> sorts = new ArrayList<>();
+            final Object sortParam = this.get(Query.SORT_PARAM_KEY_NAME);
+            if (sortParam != null && columnMap != null && columnMap.size() > 0) {
+                String sortExpression = (String) sortParam;
+                String[] sortArray = sortExpression.split(Query.SORT_PARAM_VALUE_DELIMITER);
+                for (String s : sortArray) {
+                    if (s != null && !"".equals(s) && s.length() > 1) {
+                        String sortTypeStr = s.substring(0, 1);
+                        Integer sortType = null;
+                        String fieldName = s.substring(1);
+                        String columnName = columnMap.get(fieldName);
+                        if (sortTypeStr.equals("+")) {
+                            sortType = Sort.SORT_TYPE_ASC;
+                        } else if (sortTypeStr.equals("-")) {
+                            sortType = Sort.SORT_TYPE_DESC;
                         }
-                        sortBuffer.append(columnName).append(" ").append(sortType);
-                        first = false;
+                        if (sortType != null && columnName != null) {
+                            Sort sort = Sort.builder()
+                                    .fieldName(fieldName)
+                                    .columnName(columnName)
+                                    .sortType(sortType)
+                                    .build();
+                            sorts.add(sort);
+                        }
                     }
                 }
             }
+            this.put(Query.SORT_PARAM_KEY_NAME, sorts);
         }
-        String sort = sortBuffer.toString();
-        if ("".equals(sort)) {
-            this.put(Query.SORT_PARAM_KEY_NAME, "");
-        } else {
-            this.put(Query.SORT_PARAM_KEY_NAME, String.format(" ORDER BY %s", sort));
-        }
+    }
+
+    public boolean isSort(){
+        return containsKey(Query.SORT_PARAM_KEY_NAME);
     }
 
     /**

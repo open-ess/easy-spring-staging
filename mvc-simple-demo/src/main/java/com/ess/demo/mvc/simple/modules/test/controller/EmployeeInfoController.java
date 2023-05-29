@@ -49,7 +49,7 @@ public class EmployeeInfoController implements SimpleRest {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public RestResult<Page<EmployeeInfo>> queryPage(@SwaggerParam Query q, @UserParam AuthorizationUser<?, ?, ?, ?> u) throws Exception {
     q.sort(getColumnMap());
-    return RestResult.success(employeeInfoService.queryPage(u, q));
+    return RestResult.success(employeeInfoService.queryPage(u, q,employeeInfoService.getAccountInfoDetailsQueryPageExecutor(),employeeInfoService.getSalaryInfoListQueryPageExecutor(),employeeInfoService.getLogInfoAddQueryPageExecutor()));
   }
 
   @ApiOperation(value = "查询员工详情", notes = "查询员工详情")
@@ -67,7 +67,7 @@ public class EmployeeInfoController implements SimpleRest {
   })
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public RestResult<String> add(@RequestBody EmployeeInfo employeeInfo, @UserParam AuthorizationUser<?, ?, ?, ?> u) throws Exception {
-    return RestResult.success(employeeInfoService.add(u, employeeInfo));
+    return RestResult.success(employeeInfoService.add(u, employeeInfo,employeeInfoService.getLogAddAddExecutor()));
   }
 
   @ApiOperation(value = "修改员工信息-全部字段", notes = "修改员工信息-全部字段")

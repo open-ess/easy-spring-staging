@@ -133,7 +133,7 @@ public class Page<M extends Model<?>> {
     public Page(List<M> items) {
         if (items != null) {
             int itemsTotalInteger = items.size();
-            Long itemsTotalLong = Long.getLong(Integer.toString(itemsTotalInteger));
+            Long itemsTotalLong = Long.valueOf(itemsTotalInteger);
             this.pageNo = 1;
             this.pageSize = itemsTotalInteger;
             this.total = itemsTotalLong;

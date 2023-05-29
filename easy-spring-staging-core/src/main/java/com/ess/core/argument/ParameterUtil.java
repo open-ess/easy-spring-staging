@@ -12,7 +12,7 @@ public class ParameterUtil {
     private static final String PARAM_TYPE_QUERY = "query";
     private static final String PARAM_TYPE_HEADER = "header";
 
-
+    private static final String PARAM_TYPE_PATH = "path";
     private static final String PARAM_DATA_TYPE_STRING = "string";
 
     private static final String PARAM_DATA_TYPE_INTEGER = "int";
@@ -31,6 +31,21 @@ public class ParameterUtil {
     private static final String EMPTY_DATA_VALUE = "";
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 
+    public static boolean isQueryParam(String paramType){
+        return PARAM_TYPE_QUERY.equals(paramType);
+    }
+
+    public static boolean isHeaderParam(String paramType){
+        return PARAM_TYPE_HEADER.equals(paramType);
+    }
+
+    public static boolean isPathParam(String paramType){
+        return PARAM_TYPE_PATH.equals(paramType);
+    }
+
+    public static boolean isFormParam(String paramType){
+        return PARAM_TYPE_FORM.equals(paramType);
+    }
 
     public static String getParamValue(String name, String paramType, NativeWebRequest webRequest) {
         String value = null;

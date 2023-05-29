@@ -77,11 +77,11 @@ public class RestResult<D> implements Serializable {
     }
 
     // 状态码
-    @ApiModelProperty(value = "状态码", required = true)
+    @ApiModelProperty(value = "状态码,200为成功,其它为失败", required = true)
     private Integer code;
 
     // 描述信息
-    @ApiModelProperty(value = "描述信息", required = true)
+    @ApiModelProperty(value = "描述信息,当code不等于200时,该信息可以用于应用层提示", required = true)
     private String message;
 
     // 响应数据

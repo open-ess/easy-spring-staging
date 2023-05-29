@@ -14,19 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 public class AccessAspect extends AbstractAspect {
 
-    @Override
-    public void postProcess(long startTime, long endTime, Object result, HttpServletRequest request) throws Exception {
-    }
+  @Override
+  public void postProcess(long startTime, long endTime, Object result, HttpServletRequest request) throws Exception {
+  }
 
-    @Override
-    public void preProcess(HttpServletRequest req) throws Exception {
-        String uri = req.getRequestURI();
-        log.info("访问路径:" + uri);
-    }
+  @Override
+  public void preProcess(HttpServletRequest req) throws Exception {
+    String uri = req.getRequestURI();
+    log.info("访问路径:" + uri);
+  }
 
 
-    @Pointcut("execution(* com.ess.demo.mvc.simple.modules.*.controller..*.*(..))")
-    public void pointcut() {
-    }
+  @Pointcut("execution(* com.ess.demo.mvc.simple.modules.*.controller..*.*(..))")
+  public void pointcut() {
+  }
 }
 

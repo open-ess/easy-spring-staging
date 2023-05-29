@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.util.Date;
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,31 +15,28 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-@ApiModel(value = "EmployeeInfo", description = "员工-模型类")
-public class EmployeeInfo implements Model<String> {
+@ApiModel(value = "SalaryInfo", description = "薪水-模型类")
+public class SalaryInfo implements Model<String> {
 
-  // 员工ID
-  @ApiModelProperty(value = "员工ID")
+  // 薪水ID
+  @ApiModelProperty(value = "薪水ID")
   private String id;
 
   // 账号ID
   @ApiModelProperty(value = "账号ID")
   private String accountId;
 
-  // 员工姓名
-  @ApiModelProperty(value = "员工姓名")
-  private String employeeName;
+  // 年份
+  @ApiModelProperty(value = "年份")
+  private Integer yearNumber;
 
-  // 入职日期
-  @ApiModelProperty(value = "入职日期, 格式:yyyy-MM-dd")
-  @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
-  private Date entryTime;
+  // 月份
+  @ApiModelProperty(value = "月份")
+  private Integer monthNumber;
 
-  @ApiModelProperty(value = "账号")
-  private AccountInfo accountInfo;
-
-  @ApiModelProperty(value = "薪水列表")
-  private List<SalaryInfo> salaryInfos;
+  // 薪水（单位：元）
+  @ApiModelProperty(value = "薪水（单位：元）")
+  private Float salaryAmount;
 
   @Override
   public String getKey() {
